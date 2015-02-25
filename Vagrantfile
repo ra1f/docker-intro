@@ -20,7 +20,7 @@ Vagrant.configure("2") do |config|
   
   config.proxy.http     = "http://#{PROXY_NAME}"
   config.proxy.https    = "https://#{PROXY_NAME}"
-  config.proxy.no_proxy = "localhost,127.0.0.1"
+  config.proxy.no_proxy = "localhost,127.0.0.1,/var/run/docker.sock"
 
   config.vm.provision :shell, :inline => "mkdir -p /var/lib/cloud/instance; touch /var/lib/cloud/instance/locale-check.skip"
   config.vm.provision :shell, :inline => "curl -sSL https://get.docker.com/ubuntu/ | sudo sh"
