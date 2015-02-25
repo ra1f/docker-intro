@@ -3,6 +3,7 @@
 Vagrant.require_version ">= 1.4.0"
 
 BOX_NAME = "docker-intro"
+PROXY_NAME = "mnetwebproxy01.m-net.de:3128"
 
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/trusty64"
@@ -16,6 +17,10 @@ Vagrant.configure("2") do |config|
     vbox.name = BOX_NAME
     vbox.memory = 1024
   end
+  
+  config.proxy.http     = "http://#{PROXY_NAME}"
+  config.proxy.https    = "https://#{PROXY_NAME}"
+  config.proxy.no_proxy = "localhost,127.0.0.1"
 
   config.vm.provision :shell, :inline => "mkdir -p /var/lib/cloud/instance; touch /var/lib/cloud/instance/locale-check.skip"
   config.vm.provision :shell, :inline => "curl -sSL https://get.docker.com/ubuntu/ | sudo sh"

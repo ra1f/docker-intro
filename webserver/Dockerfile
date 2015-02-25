@@ -4,9 +4,6 @@ FROM ra1f/docker_intro_groovy
 
 MAINTAINER Ralf Düerkop <ralf.dueerkop@m-net.de>
 
-ENV GROOVY_HOME $HOME/.gvm/groovy/current
-ENV PATH $GROOVY_HOME/bin:$PATH
-
 EXPOSE 8080
 
 ADD webServer.groovy /opt/webserver/webServer.groovy
