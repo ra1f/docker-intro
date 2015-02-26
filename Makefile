@@ -1,5 +1,5 @@
 LOGDIR=logs
-NUM_OF_SERVERS=5
+NUM_OF_SERVERS=25	
 
 all:
 	@echo "make build -- build docker images"
@@ -11,16 +11,15 @@ $(LOGDIR):
 	@mkdir -p $@
 
 build:
-	@docker build --no-cache --force-rm -t ra1f/docker_intro_jdk jdk
-	@docker build --no-cache --force-rm -t ra1f/docker_intro_groovy groovy
-	#@docker build --no-cache --force-rm -t ra1f/docker_intro_webserver webserver
+	@docker build -t ra1f/docker_intro_nodejs nodejs
+	@docker build -t ra1f/docker_intro_njs_webserver njs_webserver
 	@docker images
 
 run: $(LOGDIR)
 	@echo "+++ Starting containers +++"
 	@for i in `seq 1 $(NUM_OF_SERVERS)`; do \
 		name=webserver-$$i; \
-		container_id=$$(docker run -d --cidfile=$</webserver-$$i.cid --name=$$name --hostname=$$name -v `pwd`/$<:/logs ra1f/docker_intro_webserver:latest /opt/webserver/run.sh /logs) ; \
+		container_id=$$(docker run -d --name=$$name -v `pwd`/$<:/logs ra1f/docker_intro_njs_webserver:latest /opt/njs_webserver/run.sh /logs); \
 		docker ps -l | tail -n +2; \
 	done
 	@sleep 1
@@ -28,14 +27,13 @@ run: $(LOGDIR)
 demo:
 	@echo "+++ Starting demo +++"
 	@for i in $$(docker ps -q | xargs docker inspect -f '{{ .NetworkSettings.IPAddress }}'); do \
-		curl http://$$i:8080/scripts/simpleGroovlet.groovy; \
+		curl http://$$i:8080; \
 	 done
 
 
 stop: $(LOGDIR)
-	-@docker ps | grep ra1f/docker_intro_webserver | awk '{ print $$1 }' | xargs docker kill > /dev/null
-	-@docker ps -a | grep ra1f/docker_intro_webserver | awk '{ print $$1 }' | xargs docker rm > /dev/null
-	-@rm $</*.cid
+	-@docker ps | grep ra1f/docker_intro_njs_webserver | awk '{ print $$1 }' | xargs docker kill > /dev/null
+	-@docker ps -a | grep ra1f/docker_intro_njs_webserver | awk '{ print $$1 }' | xargs docker rm > /dev/null
 
 clean: clean-logs clean-images
 
