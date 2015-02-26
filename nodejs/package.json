@@ -1,0 +1,10 @@
+{
+  "name": "docker_intro_nodejs",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Node.js Hello <your_ip> app on CentOS using docker",
+  "author": "Ralf Düerkop <ralf.dueerkop@m-net.de>",
+  "dependencies": {
+    "express": "3.2.4"
+  }
+}
