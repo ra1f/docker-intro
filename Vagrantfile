@@ -18,6 +18,8 @@ Vagrant.configure("2") do |config|
     vbox.memory = 1024
   end
   
+  ########################################################################################
+  # In case you sit behind a firewall uncomment this and provide the proxy server
   #config.proxy.http     = "http://#{PROXY_NAME}"
   #config.proxy.https    = "https://#{PROXY_NAME}"
   #config.proxy.no_proxy = "localhost,127.0.0.1,/var/run/docker.sock"

@@ -12,14 +12,14 @@ $(LOGDIR):
 
 build:
 	@docker build -t ra1f/docker_intro_nodejs nodejs
-	@docker build -t ra1f/docker_intro_njs_webserver njs_webserver
+	@docker build -t ra1f/docker_intro_webserver webserver
 	@docker images
 
 run: $(LOGDIR)
 	@echo "+++ Starting containers +++"
 	@for i in `seq 1 $(NUM_OF_SERVERS)`; do \
 		name=webserver-$$i; \
-		container_id=$$(docker run -d --name=$$name -v `pwd`/$<:/logs ra1f/docker_intro_njs_webserver:latest /opt/njs_webserver/run.sh /logs); \
+		container_id=$$(docker run -d --name=$$name -v `pwd`/$<:/logs ra1f/docker_intro_webserver:latest /opt/webserver/run.sh /logs); \
 		docker ps -l | tail -n +2; \
 	done
 	@sleep 1
@@ -32,8 +32,8 @@ demo:
 
 
 stop: $(LOGDIR)
-	-@docker ps | grep ra1f/docker_intro_njs_webserver | awk '{ print $$1 }' | xargs docker kill > /dev/null
-	-@docker ps -a | grep ra1f/docker_intro_njs_webserver | awk '{ print $$1 }' | xargs docker rm > /dev/null
+	-@docker ps | grep ra1f/docker_intro_webserver | awk '{ print $$1 }' | xargs docker kill > /dev/null
+	-@docker ps -a | grep ra1f/docker_intro_webserver | awk '{ print $$1 }' | xargs docker rm > /dev/null
 
 clean: clean-logs clean-images
 

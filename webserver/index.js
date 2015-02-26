@@ -12,7 +12,7 @@ process.argv.forEach(function (val, index, array) {
 
 // App
 var app = express();
-var server = http.createServer(app)
+var server = http.createServer(app);
 
 // HTTP handler
 app.get('/', function (req, res) {
@@ -20,5 +20,5 @@ app.get('/', function (req, res) {
 });
 
 // Start Webserver
-server.listen(PORT)
+server.listen(PORT);
 console.log('Running on http://' + HOST + ':' + PORT);
