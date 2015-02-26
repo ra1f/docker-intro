@@ -1,7 +1,5 @@
 LOGDIR=logs
-NUM_OF_SERVERS=1
-GROOVY_TAG=ra1f/docker_intro_groovy
-WEBSERVER_TAG=ra1f/docker_intro_webserver
+NUM_OF_SERVERS=5
 
 all:
 	@echo "make build -- build docker images"
@@ -13,8 +11,9 @@ $(LOGDIR):
 	@mkdir -p $@
 
 build:
-	@docker build --no-cache --force-rm -t $(GROOVY_TAG) groovy
-	@docker build --no-cache --force-rm -t $(WEBSERVER_TAG) webserver
+	@docker build --no-cache --force-rm -t ra1f/docker_intro_jdk jdk
+	@docker build --no-cache --force-rm -t ra1f/docker_intro_groovy groovy
+	#@docker build --no-cache --force-rm -t ra1f/docker_intro_webserver webserver
 	@docker images
 
 run: $(LOGDIR)
@@ -29,13 +28,13 @@ run: $(LOGDIR)
 demo:
 	@echo "+++ Starting demo +++"
 	@for i in $$(docker ps -q | xargs docker inspect -f '{{ .NetworkSettings.IPAddress }}'); do \
-		curl http://$$i:8080; \
+		curl http://$$i:8080/scripts/simpleGroovlet.groovy; \
 	 done
 
 
 stop: $(LOGDIR)
-	-@docker ps | grep $(WEBSERVER_TAG) | awk '{ print $$1 }' | xargs docker kill > /dev/null
-	-@docker ps -a | grep $(WEBSERVER_TAG) | awk '{ print $$1 }' | xargs docker rm > /dev/null
+	-@docker ps | grep ra1f/docker_intro_webserver | awk '{ print $$1 }' | xargs docker kill > /dev/null
+	-@docker ps -a | grep ra1f/docker_intro_webserver | awk '{ print $$1 }' | xargs docker rm > /dev/null
 	-@rm $</*.cid
 
 clean: clean-logs clean-images

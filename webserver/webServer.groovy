@@ -4,9 +4,7 @@ import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.servlet.*
 import groovy.servlet.*
  
-//@Grapes([
-    @Grab(group='org.eclipse.jetty.aggregate', module='jetty-all', version='7.6.15.v20140411')/*,
-    @Grab(group='javax.servlet', module='servlet-api', version='2.4')])*/
+@Grab(group='org.eclipse.jetty.aggregate', module='jetty-all', version='7.6.15.v20140411')
 def startJetty() {
     def server = new Server(8080)
  
