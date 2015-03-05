@@ -3,7 +3,7 @@
 Vagrant.require_version ">= 1.4.0"
 
 BOX_NAME = "docker-intro"
-#PROXY_NAME = "<host>:<port>"
+#PROXY_NAME = "<proxyname>:<proxyport>"
 
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/trusty64"
@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
   end
   
   ########################################################################################
-  # In case you sit behind a firewall uncomment this and provide the proxy server
+  # In case you sit behind a firewall uncomment this and provide the proxy server (see above)
   #config.proxy.http     = "http://#{PROXY_NAME}"
   #config.proxy.https    = "https://#{PROXY_NAME}"
   #config.proxy.no_proxy = "localhost,127.0.0.1,/var/run/docker.sock"

@@ -27,7 +27,7 @@ run: $(LOGDIR)
 demo:
 	@echo "+++ Starting demo +++"
 	@for i in $$(docker ps -q | xargs docker inspect -f '{{ .NetworkSettings.IPAddress }}'); do \
-		curl http://$$i:8080; \
+		curl --noproxy $$i http://$$i:8080; \
 	 done
 
 
